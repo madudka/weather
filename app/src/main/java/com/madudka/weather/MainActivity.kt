@@ -8,28 +8,31 @@ import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
-import com.google.android.gms.common.GooglePlayServicesRepairableException
+
 import com.google.android.gms.location.*
 import com.google.android.gms.security.ProviderInstaller
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.madudka.weather.databinding.ActivityMainBinding
+import com.madudka.weather.model.DayModel
+import com.madudka.weather.model.HourModel
+import com.madudka.weather.model.WeatherData
+import com.madudka.weather.presenter.MainPresenter
+import com.madudka.weather.view.MainView
 import com.madudka.weather.view.adapter.MainDayListAdapter
 import com.madudka.weather.view.adapter.MainHourListAdapter
-import java.security.KeyManagementException
-import java.security.NoSuchAlgorithmException
-import javax.net.ssl.SSLContext
+import moxy.MvpAppCompatActivity
+import moxy.ktx.moxyPresenter
 
 
-const val GEO_LOC_REQ_SUCCESS_CODE = 1
 const val ERROR_DIALOG_REQUEST_CODE = 1
 const val TAG = "GEO"
 
-class MainActivity : AppCompatActivity(), ProviderInstaller.ProviderInstallListener {
+class MainActivity : MvpAppCompatActivity(), MainView, ProviderInstaller.ProviderInstallListener {
+
+    private val mainPresenter by moxyPresenter { MainPresenter() }
 
     private lateinit var activityMainBinding: ActivityMainBinding
 
@@ -48,8 +51,6 @@ class MainActivity : AppCompatActivity(), ProviderInstaller.ProviderInstallListe
 
         ProviderInstaller.installIfNeededAsync(this, this)
 
-        checkPermissions()
-
         init()
 
         activityMainBinding.mainHourList.apply {
@@ -63,6 +64,8 @@ class MainActivity : AppCompatActivity(), ProviderInstaller.ProviderInstallListe
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
         }
+
+        mainPresenter.enable()
 
         fusedLocProviderClient.requestLocationUpdates(locReq, locCallback, Looper.getMainLooper())
 
@@ -97,51 +100,13 @@ class MainActivity : AppCompatActivity(), ProviderInstaller.ProviderInstallListe
             Log.d(TAG, "onLocationResult: ${locationResult.locations.size}")
             for (l in locationResult.locations) {
                 loc = l
+                mainPresenter.refresh(l.latitude.toString(), l.longitude.toString())
                 Log.d(TAG, "location: lat ${l.latitude}, lon ${l.longitude}")
             }
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.d(TAG, "onRequestPermissionsResult: $requestCode")
-    }
 
-    private fun checkPermissions() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-
-            MaterialAlertDialogBuilder(this)
-                .setTitle("Приложению необходимы геоданные")
-                .setMessage("Пожалуйста разрешите получать геоданные")
-                .setPositiveButton("Good") { _, _ ->
-                    ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                        GEO_LOC_REQ_SUCCESS_CODE
-                    )
-                    ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                        GEO_LOC_REQ_SUCCESS_CODE
-                    )
-                }
-                .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
-                .create()
-                .show()
-        }
-    }
 
     override fun onProviderInstallFailed(errorCode: Int, recoveryIntent: Intent?) {
         GoogleApiAvailability.getInstance().apply {
@@ -165,6 +130,30 @@ class MainActivity : AppCompatActivity(), ProviderInstaller.ProviderInstallListe
     }
 
     override fun onProviderInstalled() {
+    }
+
+    override fun showCity(data: String) {
+        //TODO("Not yet implemented")
+    }
+
+    override fun showCurrentData(data: WeatherData) {
+        //TODO("Not yet implemented")
+    }
+
+    override fun showHourData(data: List<HourModel>) {
+        (activityMainBinding.mainHourList.adapter as MainHourListAdapter).updateData()
+    }
+
+    override fun showDayData(data: List<DayModel>) {
+        (activityMainBinding.mainDayList.adapter as MainDayListAdapter).updateData()
+    }
+
+    override fun showError(error: Throwable) {
+        //TODO("Not yet implemented")
+    }
+
+    override fun setLoading(flag: Boolean) {
+        //TODO("Not yet implemented")
     }
 
 }

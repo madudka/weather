@@ -3,7 +3,6 @@ package com.madudka.weather.view.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.madudka.weather.R
 import com.madudka.weather.model.DayModel
 

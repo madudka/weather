@@ -1,17 +1,27 @@
 package com.madudka.weather.presenter
 
+import android.util.Log
+import com.madudka.weather.model.api.API
+import com.madudka.weather.model.repository.MainRepository
 import com.madudka.weather.view.MainView
 
 class MainPresenter : BasePresenter<MainView>() {
 
-    //TODO переменная репозитория
+    private val repository = MainRepository(API())
 
     override fun enable() {
-        //TODO("Not yet implemented")
+        repository.dataEmitter.subscribe { res ->
+            Log.d("MainRepository", "enable(): $res")
+            viewState.showLocation(res.city)
+            viewState.showDayData(res.weatherDataModel.daily)
+            viewState.showHourData(res.weatherDataModel.hourly)
+            viewState.showCurrentData(res.weatherDataModel)
+            res.error?.let { viewState.showError(res.error) }
+        }
     }
 
     fun refresh(lat: String, lon: String){
         viewState.setLoading(true)
-        //TODO обращение к репозиторию
+        repository.reloadData(lat, lon)
     }
 }

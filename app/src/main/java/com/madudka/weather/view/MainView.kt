@@ -2,17 +2,17 @@ package com.madudka.weather.view
 
 import com.madudka.weather.model.DayModel
 import com.madudka.weather.model.HourModel
-import com.madudka.weather.model.WeatherData
+import com.madudka.weather.model.WeatherDataModel
 import moxy.MvpView
 import moxy.viewstate.strategy.alias.AddToEndSingle
 
 interface MainView : MvpView {
 
     @AddToEndSingle
-    fun showCity(data: String)
+    fun showLocation(data: String)
 
     @AddToEndSingle
-    fun showCurrentData(data: WeatherData)
+    fun showCurrentData(data: WeatherDataModel)
 
     @AddToEndSingle
     fun showHourData(data: List<HourModel>)

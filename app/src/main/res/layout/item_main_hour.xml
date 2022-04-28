@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="18dp"
         android:orientation="vertical">
 
         <com.google.android.material.textview.MaterialTextView
@@ -36,7 +36,7 @@
             tools:src="@drawable/ic_sunny" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/item_hour_humidity_tv"
+            android:id="@+id/item_hour_pop_tv"
             style="@style/TextViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

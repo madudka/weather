@@ -15,4 +15,6 @@ class API {
         .build()
 
     fun provideWeatherApi() : WeatherApi = openWeatherMap.create(WeatherApi::class.java)
+
+    fun provideGeoCodeApi() : GeoCodeApi = openWeatherMap.create(GeoCodeApi::class.java)
 }

@@ -1,26 +1,22 @@
 package com.madudka.weather
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
-import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.common.GoogleApiAvailability
 
 import com.google.android.gms.location.*
 import com.google.android.gms.security.ProviderInstaller
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.madudka.weather.databinding.ActivityMainBinding
 import com.madudka.weather.model.DayModel
 import com.madudka.weather.model.HourModel
-import com.madudka.weather.model.WeatherData
+import com.madudka.weather.model.WeatherDataModel
 import com.madudka.weather.presenter.MainPresenter
-import com.madudka.weather.view.MainView
+import com.madudka.weather.view.*
 import com.madudka.weather.view.adapter.MainDayListAdapter
 import com.madudka.weather.view.adapter.MainHourListAdapter
 import moxy.MvpAppCompatActivity
@@ -132,28 +128,44 @@ class MainActivity : MvpAppCompatActivity(), MainView, ProviderInstaller.Provide
     override fun onProviderInstalled() {
     }
 
-    override fun showCity(data: String) {
-        //TODO("Not yet implemented")
+    override fun showLocation(data: String) {
+        activityMainBinding.locationTv.text = data
     }
 
-    override fun showCurrentData(data: WeatherData) {
-        //TODO("Not yet implemented")
+    override fun showCurrentData(data: WeatherDataModel) {
+        data.apply {
+            activityMainBinding.dateTv.text = current.dt.toDateFormat(FORMAT_DAY_MONTH_NAME)
+            activityMainBinding.mainTemp.text = current.temp.toCelsius()
+            activityMainBinding.mainImg.setImageResource(current.weather[0].icon.provideImage())
+            daily[0].temp.apply {
+                activityMainBinding.minTempTv.text = min.toCelsius()
+                activityMainBinding.maxTempTv.text = max.toCelsius()
+            }
+
+            activityMainBinding.mainWeatherIcon.setImageResource(current.weather[0].icon.provideIcon())
+            activityMainBinding.mainWeatherTv.text = current.weather[0].description
+            activityMainBinding.mainWindTv.text = current.wind_speed.toExtra(" м/с")
+            activityMainBinding.mainHumidityTv.text = current.humidity.toExtra("%")
+            activityMainBinding.mainPressureTv.text = current.pressure.toMercuryMM()
+            activityMainBinding.mainSunriseTv.text = current.sunrise.toDateFormat(FORMAT_HOUR_MINUTE)
+            activityMainBinding.mainSunsetTv.text = current.sunset.toDateFormat(FORMAT_HOUR_MINUTE)
+        }
     }
 
     override fun showHourData(data: List<HourModel>) {
-        (activityMainBinding.mainHourList.adapter as MainHourListAdapter).updateData()
+        (activityMainBinding.mainHourList.adapter as MainHourListAdapter).updateData(data)
     }
 
     override fun showDayData(data: List<DayModel>) {
-        (activityMainBinding.mainDayList.adapter as MainDayListAdapter).updateData()
+        (activityMainBinding.mainDayList.adapter as MainDayListAdapter).updateData(data)
     }
 
     override fun showError(error: Throwable) {
-        //TODO("Not yet implemented")
+
     }
 
     override fun setLoading(flag: Boolean) {
-        //TODO("Not yet implemented")
+
     }
 
 }

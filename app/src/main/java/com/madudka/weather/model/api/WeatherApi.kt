@@ -1,5 +1,7 @@
 package com.madudka.weather.model.api
 
+import com.madudka.weather.model.WeatherDataModel
+import io.reactivex.rxjava3.core.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,5 +13,5 @@ interface WeatherApi {
         @Query("exclude") exclude : String = "minutely, alerts",
         @Query("appid") appid : String = "59c258ce19c4588d773f38bb7df92013",
         @Query("lang") lang : String = "en"
-    )
+    ) : Observable<WeatherDataModel>
 }

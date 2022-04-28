@@ -6,11 +6,14 @@
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/drawable/bg_bottom_sheer_swipe.xml" value="0.144" />
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/drawable/bg_bottom_sheet.xml" value="0.144" />
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/drawable/bg_bottom_sheet_swipe.xml" value="0.113" />
+        <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/drawable/ic_humidity.xml" value="0.113" />
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/drawable/ic_sunny.xml" value="0.1585" />
+        <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/drawable/ic_sunset.xml" value="0.113" />
+        <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/drawable/ic_thermostat.xml" value="0.113" />
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/activity_init.xml" value="0.1" />
-        <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/item_main_day.xml" value="0.25" />
-        <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/item_main_hour.xml" value="0.1" />
+        <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/item_main_hour.xml" value="0.33" />
       </map>
     </option>
   </component>

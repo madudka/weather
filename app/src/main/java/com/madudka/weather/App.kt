@@ -2,14 +2,18 @@ package com.madudka.weather
 
 import android.app.Application
 import android.content.Intent
-import android.content.SharedPreferences
+import com.madudka.weather.model.room.OpenWeatherDatabase
 
 private const val SETTINGS = "SETTINGS"
 private const val START_FlAG = "START_FLAG"
 class App : Application() {
 
+    companion object { lateinit var db : OpenWeatherDatabase }
+
     override fun onCreate() {
         super.onCreate()
+
+        db = OpenWeatherDatabase.getInstance(applicationContext);
 
         val preferences = getSharedPreferences(SETTINGS, MODE_PRIVATE)
         val flag = preferences.contains(START_FlAG)

@@ -5,9 +5,10 @@ import com.madudka.weather.model.api.API
 import com.madudka.weather.model.repository.MainRepository
 import com.madudka.weather.view.MainView
 
-class MainPresenter : BasePresenter<MainView>() {
+class MainPresenter() : BasePresenter<MainView>() {
 
     private val repository = MainRepository(API())
+
 
     override fun enable() {
         repository.dataEmitter.subscribe { res ->

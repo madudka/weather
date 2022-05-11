@@ -2,4 +2,26 @@
     <string name="app_name">Weather</string>
     <string name="min">min</string>
     <string name="max">max</string>
+    <string name="location">Location</string>
+    <string name="search">search</string>
+    <string name="edit_location">edit location</string>
+    <string name="state" translatable="false">, %1$s</string>
+    <string name="provided_by">Provided by</string>
+    <string name="provider_description">All data provided by OpenWeatherMap. Link: https://openweathermap.org/</string>
+
+    <string name="temperature_unit">Temperature unit</string>
+    <string name="wind_speed_unit">Wind speed unit</string>
+    <string name="pressure_unit">Pressure unit</string>
+    <string name="temp_c" translatable="false">°C</string>
+    <string name="temp_f" translatable="false">°F</string>
+    <string name="ms">m/s</string>
+    <string name="kmh">km/h</string>
+    <string name="mmhg">mmHg</string>
+    <string name="hpa">hPa</string>
+    <string name="wind_speed_ms">%1$s m/s</string>
+    <string name="wind_speed_kmh">%1$s km/h</string>
+    <string name="pressure_mmHg">%1$s mmHg</string>
+    <string name="pressure_hpa">%1$s hPa</string>
+
+
 </resources>

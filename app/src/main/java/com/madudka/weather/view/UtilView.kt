@@ -1,6 +1,11 @@
 package com.madudka.weather.view
 
+import android.text.Editable
+import android.text.TextWatcher
+import com.google.android.material.textfield.TextInputEditText
 import com.madudka.weather.R
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Flowable
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -14,7 +19,7 @@ fun Long.toDateFormat(format: String) : String{
     val timeZone = calendar.timeZone
     val simpleDateFormat = SimpleDateFormat(format, Locale.getDefault())
     simpleDateFormat.timeZone = timeZone
-    return  simpleDateFormat.format(Date(this * 1000))
+    return simpleDateFormat.format(Date(this * 1000))
 }
 
 //fun Double.toCelsius() = (this - 273.15).roundToInt().toString() + "\u00B0"
@@ -22,11 +27,13 @@ fun Long.toDateFormat(format: String) : String{
 fun Double.toCelsius() = (if ((this - 273.15).roundToInt() > 0) "+" else "") +
         (this - 273.15).roundToInt().toString() + "\u00B0"
 
+fun Double.toDegree() = SettingsHolder.temp.getValue(this)
+
 //fun Double.toPercent(extraPart: String = "") = (this * 1000).roundToInt().toString() + extraPart
 
 fun Double.toExtra(extraPart: String = "") = this.toString() + extraPart
 
-fun Int.toMercuryMM() = String.format("%.2f", this * 0.750063755419211) + " мм"
+//fun Int.toMercuryMM() = String.format("%.2f", this * 0.750063755419211) + " мм"
 
 fun Int.toExtra(extraPart: String = "") = this.toString() + extraPart
 
@@ -55,4 +62,33 @@ fun String.provideImage() = when(this) {
     "13n", "13d" -> R.mipmap.snow1x
     "50n", "50d" -> R.mipmap.mist1x
     else -> R.drawable.ic_error
+}
+
+private abstract class CustomTextWatcher : TextWatcher {
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+    }
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+    }
+
+    override fun afterTextChanged(s: Editable?) {
+
+    }
+}
+
+fun TextInputEditText.createObservable() : Flowable<String>{
+    return Flowable.create({
+        addTextChangedListener(object: CustomTextWatcher(){
+            override fun afterTextChanged(s: Editable?) {
+                it.onNext(s.toString())
+            }
+        })
+    }, BackpressureStrategy.BUFFER)
+}
+
+enum class State {
+    CURRENT, SAVED
 }

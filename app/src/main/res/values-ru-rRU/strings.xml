@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="min">мин</string>
+    <string name="max">макс</string>
+    <string name="location">Местоположение</string>
+    <string name="search">поиск</string>
+    <string name="edit_location">смена местоположения</string>
+    <string name="provided_by">Предоставлено</string>
+    <string name="provider_description">Все данные предоставлены сервисом OpenWeatherMap. Адрес: https://openweathermap.org/</string>
+    <string name="temperature_unit">Единицы измерения температуры</string>
+    <string name="wind_speed_unit">Единицы измерения скорости ветра</string>
+    <string name="pressure_unit">Единицы измерения давления</string>
+    <string name="ms">м/с</string>
+    <string name="kmh">км/ч</string>
+    <string name="mmhg">ммРс</string>
+    <string name="hpa">гПа</string>
+    <string name="wind_speed_ms">%1$s м/с</string>
+    <string name="wind_speed_kmh">%1$s км/</string>
+    <string name="pressure_mmHg">%1$s мм рт.ст.</string>
+    <string name="pressure_hpa">%1$s гПа</string>
+</resources>

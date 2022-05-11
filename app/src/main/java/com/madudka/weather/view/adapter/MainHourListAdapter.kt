@@ -22,7 +22,7 @@ class MainHourListAdapter : BaseAdapter<HourModel>() {
         override fun bindView(position: Int) {
             listData[position].apply {
                 viewBinding.itemHourTimeTv.text = dt.toDateFormat(FORMAT_HOUR_MINUTE)
-                viewBinding.itemHourTempTv.text =  temp.toCelsius()
+                viewBinding.itemHourTempTv.text =  temp.toDegree()
                 viewBinding.itemHourImg.setImageResource(weather[0].icon.provideIcon())
                 viewBinding.itemHourPopTv.text = pop.toExtra("%")
             }

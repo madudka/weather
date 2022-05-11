@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity"
+    android:background="@color/settings_bg_color">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/settings_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/settings_toolbar"
+            style="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/white"
+            app:title="Settings"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="@color/black"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <FrameLayout
+        android:id="@+id/settings_temp_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/settings_appbar"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:text="@string/temperature_unit"/>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/temp_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="end"
+            app:singleSelection="true"
+            app:selectionRequired="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/temp_unit_c"
+                style="@style/OutlineButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="c"
+                android:text="@string/temp_c"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/temp_unit_f"
+                style="@style/OutlineButton"
+                app:strokeColor="@color/settings_button_selector"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="f"
+                android:text="@string/temp_f"/>
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/settings_wind_speed_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/settings_temp_frame"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:text="@string/wind_speed_unit"/>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/wind_speed_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="end"
+            app:singleSelection="true"
+            app:selectionRequired="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/wind_speed_unit_ms"
+                style="@style/OutlineButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="ms"
+                android:text="@string/ms"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/wind_speed_unit_kmh"
+                style="@style/OutlineButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="kmh"
+                android:text="@string/kmh"/>
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/settings_pressure_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/settings_wind_speed_frame"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:text="@string/pressure_unit"/>
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/pres_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_gravity="end"
+            app:singleSelection="true"
+            app:selectionRequired="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pres_unit_mmHg"
+                style="@style/OutlineButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="mmhg"
+                android:text="@string/mmhg"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pres_unit_hpa"
+                style="@style/OutlineButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:tag="hpa"
+                android:text="@string/hpa"/>
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/white">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/provided_by"
+            android:textStyle="bold"
+            android:layout_gravity=""/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:textSize="12sp"
+            android:text="@string/provider_description"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:src="@mipmap/owm_logo1x"/>
+
+    </FrameLayout>
+        
+
+</androidx.constraintlayout.widget.ConstraintLayout>

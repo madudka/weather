@@ -9,7 +9,6 @@ class MainPresenter() : BasePresenter<MainView>() {
 
     private val repository = MainRepository(API())
 
-
     override fun enable() {
         repository.dataEmitter.subscribe { res ->
             Log.d("MainRepository", "enable(): $res")

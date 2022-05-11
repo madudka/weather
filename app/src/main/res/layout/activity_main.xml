@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/menu_btn"
+            android:id="@+id/location_btn"
             style="@style/IconButton"
             android:layout_width="40dp"
             android:layout_height="40dp"

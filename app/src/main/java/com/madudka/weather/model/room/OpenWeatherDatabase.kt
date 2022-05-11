@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [WeatherDataEntity::class], exportSchema = false, version = 1)
+@Database(entities = [WeatherDataEntity::class, GeoCodeEntity::class], exportSchema = false, version = 1)
 abstract class OpenWeatherDatabase : RoomDatabase() {
 
     abstract fun getWeatherDataDao() : WeatherDataDao
+
+    abstract fun getGeoCodeDao() : GeoCodeDao
 
     //TODO К релизу убрать .fallbackToDestructiveMigration()
     companion object : SingletonHolder<OpenWeatherDatabase, Context>({

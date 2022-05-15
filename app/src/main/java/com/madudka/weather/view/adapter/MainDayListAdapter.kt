@@ -1,12 +1,20 @@
 package com.madudka.weather.view.adapter
 
+import android.opengl.Visibility
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.madudka.weather.databinding.ItemMainDayBinding
 import com.madudka.weather.model.DayModel
 import com.madudka.weather.view.*
 
 class MainDayListAdapter : BaseAdapter<DayModel>() {
+
+    lateinit var clickListener: DayItemClick
+
+    interface DayItemClick{
+        fun showDetails(data: DayModel)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
         val viewBinding = ItemMainDayBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -16,14 +24,25 @@ class MainDayListAdapter : BaseAdapter<DayModel>() {
     inner class DayViewHolder(private val viewBinding: ItemMainDayBinding) : BaseViewHolder(viewBinding.root){
 
         override fun bindView(position: Int) {
-            listData[position].apply {
-                viewBinding.itemDayDateTv.text = dt.toDateFormat(FORMAT_DAY_WEEK_NAME)
-                viewBinding.itemDayPopTv.text = pop.toExtra("%")
-                viewBinding.itemDayImg.setImageResource(weather[0].icon.provideIcon())
-                viewBinding.itemDayMaxTv.text = temp.max.toDegree()
-                viewBinding.itemDayMinTv.text = temp.min.toDegree()
+
+            val itemData = listData[position]
+
+            viewBinding.itemDayContainer.setOnClickListener {
+                clickListener.showDetails(itemData)
+            }
+
+            if (listData.isNotEmpty()) {
+                itemData.apply {
+                    val dateDay = dt.toDateFormat(FORMAT_DAY_WEEK_NAME)
+                     viewBinding.itemDayDateTv.text = if (dateDay.startsWith("0",true))
+                         dateDay.removePrefix("0") else dateDay
+
+                    viewBinding.itemDayPopTv.text = pop.toExtra("%")
+                    viewBinding.itemDayImg.setImageResource(weather[0].icon.provideIcon())
+                    viewBinding.itemDayMaxTv.text = temp.max.toDegree()
+                    viewBinding.itemDayMinTv.text = temp.min.toDegree()
+                }
             }
         }
-
     }
 }

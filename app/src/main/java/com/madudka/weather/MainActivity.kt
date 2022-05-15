@@ -1,17 +1,25 @@
 package com.madudka.weather
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.graphics.Point
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.view.WindowInsets
+import android.view.WindowManager
+import android.widget.FrameLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.common.GoogleApiAvailability
 
 import com.google.android.gms.location.*
 import com.google.android.gms.security.ProviderInstaller
 import com.madudka.weather.databinding.ActivityMainBinding
+import com.madudka.weather.model.DayListFragment
 import com.madudka.weather.model.DayModel
 import com.madudka.weather.model.HourModel
 import com.madudka.weather.model.WeatherDataModel
@@ -21,6 +29,7 @@ import com.madudka.weather.view.adapter.MainDayListAdapter
 import com.madudka.weather.view.adapter.MainHourListAdapter
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
+import kotlin.math.roundToInt
 
 const val COORDINATES = "COORDINATES"
 const val ERROR_DIALOG_REQUEST_CODE = 1
@@ -46,7 +55,16 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
         //ProviderInstaller.installIfNeededAsync(this, this)
 
+        initBottomSheet()
         init()
+        initSwipeRefresh()
+
+        binding.swipeLayout.isRefreshing = true
+
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.fragment_container, DayListFragment(), DayListFragment::class.simpleName)
+            .commit()
 
         if (!intent.hasExtra(COORDINATES)) {
             fusedLocProviderClient.requestLocationUpdates(locReq, locCallback, Looper.getMainLooper())
@@ -76,12 +94,12 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
         }
-
-        binding.mainDayList.apply {
-            adapter = MainDayListAdapter()
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            setHasFixedSize(true)
-        }
+//MOVED TO FRAGMENT
+//        binding.mainDayList.apply {
+//            adapter = MainDayListAdapter()
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//            setHasFixedSize(true)
+//        }
 
         mainPresenter.enable()
 
@@ -184,7 +202,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun showDayData(data: List<DayModel>) {
-        (binding.mainDayList.adapter as MainDayListAdapter).updateData(data)
+        (supportFragmentManager.findFragmentByTag(DayListFragment::class.simpleName) as DayListFragment).setData(data)
     }
 
     override fun showError(error: Throwable) {
@@ -192,7 +210,46 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun setLoading(flag: Boolean) {
+        binding.swipeLayout.isRefreshing = flag
+    }
 
+    private fun initBottomSheet(){
+        binding.bottomSheet.isNestedScrollingEnabled = true
+
+        val width: Int
+        val height: Int
+        val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = wm.currentWindowMetrics
+            val windowInsets: WindowInsets = windowMetrics.windowInsets
+
+            val insets = windowInsets.getInsetsIgnoringVisibility(
+                WindowInsets.Type.navigationBars() or WindowInsets.Type.displayCutout())
+            val insetsWidth = insets.right + insets.left
+            val insetsHeight = insets.top + insets.bottom
+
+            val b = windowMetrics.bounds
+            width = b.width() - insetsWidth
+            height = b.height() - insetsHeight
+        } else {
+            val size = Point()
+            val display = wm.defaultDisplay // deprecated in API 30
+            display?.getSize(size) // deprecated in API 30
+            width = size.x
+            height = size.y
+        }
+
+        binding.bottomSheetLayout.layoutParams = CoordinatorLayout.LayoutParams(width, (height * 0.6).roundToInt())
+    }
+
+    private fun initSwipeRefresh(){
+        binding.swipeLayout.apply {
+            setColorSchemeResources(R.color.sky)
+            setProgressViewEndTarget(false, 280)
+            setOnRefreshListener {
+                mainPresenter.refresh(loc.latitude.toString(), loc.longitude.toString())
+            }
+        }
     }
 
 }

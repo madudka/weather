@@ -17,7 +17,9 @@
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/activity_init.xml" value="0.1" />
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/activity_location.xml" value="0.23333333333333334" />
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/activity_settings.xml" value="0.5" />
+        <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/activity_settings.xml" value="0.33" />
+        <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/fragment_day_info.xml" value="0.33" />
+        <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/fragment_day_list.xml" value="0.22" />
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/item_location.xml" value="0.25" />
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/item_main_day.xml" value="0.25" />
         <entry key="..\:/Projects/Android/Kotlin/Weather/app/src/main/res/layout/item_main_hour.xml" value="0.33" />

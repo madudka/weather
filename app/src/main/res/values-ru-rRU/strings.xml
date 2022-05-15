@@ -8,9 +8,9 @@
     <string name="edit_location">смена местоположения</string>
     <string name="provided_by">Предоставлено</string>
     <string name="provider_description">Все данные предоставлены сервисом OpenWeatherMap. Адрес: https://openweathermap.org/</string>
-    <string name="temperature_unit">Единицы измерения температуры</string>
-    <string name="wind_speed_unit">Единицы измерения скорости ветра</string>
-    <string name="pressure_unit">Единицы измерения давления</string>
+    <string name="temperature_unit">Ед. изм. температуры</string>
+    <string name="wind_speed_unit">Ед. изм. скорости ветра</string>
+    <string name="pressure_unit">Ед. изм. давления</string>
     <string name="ms">м/с</string>
     <string name="kmh">км/ч</string>
     <string name="mmhg">ммРс</string>
@@ -19,4 +19,16 @@
     <string name="wind_speed_kmh">%1$s км/</string>
     <string name="pressure_mmHg">%1$s мм рт.ст.</string>
     <string name="pressure_hpa">%1$s гПа</string>
+    <string name="temperature">Температура</string>
+    <string name="feels_like">Ощущается</string>
+    <string name="morn">утро</string>
+    <string name="day">день</string>
+    <string name="even">вечер</string>
+    <string name="night">ночь</string>
+    <string name="humidity">Влажность</string>
+    <string name="pressure">Давление</string>
+    <string name="wind_speed">Скор. ветра</string>
+    <string name="sunrise">Восход</string>
+    <string name="wind_direction">Напр. ветра</string>
+    <string name="sunset">Закат</string>
 </resources>

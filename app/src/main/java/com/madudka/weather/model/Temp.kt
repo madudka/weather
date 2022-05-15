@@ -7,4 +7,6 @@ data class Temp(
     val min: Double,
     val morn: Double,
     val night: Double
-)
+){
+    fun getAvg()= (morn + day + eve + night)/4
+}

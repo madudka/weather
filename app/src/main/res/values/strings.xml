@@ -23,5 +23,18 @@
     <string name="pressure_mmHg">%1$s mmHg</string>
     <string name="pressure_hpa">%1$s hPa</string>
 
+    <string name="temperature">Temperature</string>
+    <string name="feels_like">Feels like</string>
+    <string name="morn">morn</string>
+    <string name="day">day</string>
+    <string name="even">even</string>
+    <string name="night">night</string>
+    <string name="humidity">Humidity</string>
+    <string name="pressure">Pressure</string>
+    <string name="wind_speed">Wind speed</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="wind_direction">Wind direction</string>
+    <string name="sunset">Sunset</string>
+
 
 </resources>

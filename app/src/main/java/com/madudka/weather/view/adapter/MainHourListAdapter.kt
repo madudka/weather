@@ -10,13 +10,11 @@ import com.madudka.weather.view.*
 class MainHourListAdapter : BaseAdapter<HourModel>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-//        val view = LayoutInflater.from(parent.context)
-//            .inflate(R.layout.item_main_hour, parent, false)
+
         val viewBinding = ItemMainHourBinding.inflate(LayoutInflater.from(parent.context), parent,false)
         return HourViewHolder(viewBinding)
     }
 
-    //parameter view: View
     inner class HourViewHolder(private val viewBinding: ItemMainHourBinding) : BaseViewHolder(viewBinding.root) {
 
         override fun bindView(position: Int) {

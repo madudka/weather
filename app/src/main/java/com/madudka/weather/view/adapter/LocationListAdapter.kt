@@ -51,8 +51,8 @@ class LocationListAdapter : BaseAdapter<GeoCodeModel>() {
                 viewBinding.state.text = if (state.isNullOrEmpty()) ""
                     else itemView.context.getString(R.string.state, state)
                 viewBinding.city.text = when (Locale.getDefault().displayLanguage){
-                    "русский" -> local_names.ru ?: name
-                    "english" -> local_names.en ?: name
+                    "русский" -> if (local_names != null) local_names.ru ?: name else name
+                    "english" -> if (local_names != null) local_names.en ?: name else name
                     else -> name
                 }
                 viewBinding.country.text = Locale("", country).displayName

@@ -21,5 +21,3 @@ interface GeoCodeApi {
         @Query("appid") appid : String = "59c258ce19c4588d773f38bb7df92013"
     ) : Observable<List<GeoCodeModel>>
 }
-
-//lat={lat}&lon={lon}&limit={limit}&appid={API key}

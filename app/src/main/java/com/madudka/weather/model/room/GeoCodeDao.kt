@@ -1,7 +1,6 @@
 package com.madudka.weather.model.room
 
 import androidx.room.*
-import com.madudka.weather.model.GeoCodeModel
 
 @Dao
 interface GeoCodeDao {

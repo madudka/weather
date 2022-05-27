@@ -12,10 +12,11 @@ abstract class OpenWeatherDatabase : RoomDatabase() {
 
     abstract fun getGeoCodeDao() : GeoCodeDao
 
-    //TODO К релизу убрать .fallbackToDestructiveMigration()
+    //fallbackToDestructiveMigration() при изменеии структуры пересоздает БД
+    //если не ставить, то при изменении структуры нужно реализовать миграцию
     companion object : SingletonHolder<OpenWeatherDatabase, Context>({
         Room.databaseBuilder(it.applicationContext, OpenWeatherDatabase::class.java, "OpenWeatherDatabase")
-            .fallbackToDestructiveMigration()
+            //.fallbackToDestructiveMigration()
             .build()
     })
 }

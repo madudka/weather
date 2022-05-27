@@ -20,6 +20,8 @@ class App : Application() {
 
         SettingsHolder.onCreate(preferences)
 
+        initAdYandex(applicationContext)
+
         val flag = preferences.contains(START_FlAG)
 
         if (!flag) {
@@ -29,6 +31,5 @@ class App : Application() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
-
     }
 }

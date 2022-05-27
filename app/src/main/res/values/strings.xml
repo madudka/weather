@@ -35,6 +35,7 @@
     <string name="sunrise">Sunrise</string>
     <string name="wind_direction">Wind direction</string>
     <string name="sunset">Sunset</string>
+    <string name="settings_title">Settings</string>
 
 
 </resources>

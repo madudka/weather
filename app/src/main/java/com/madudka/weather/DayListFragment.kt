@@ -1,4 +1,4 @@
-package com.madudka.weather.model
+package com.madudka.weather
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionInflater
-import com.madudka.weather.R
 import com.madudka.weather.databinding.FragmentDayListBinding
+import com.madudka.weather.model.DayModel
 import com.madudka.weather.view.adapter.MainDayListAdapter
 
 class DayListFragment : DayBaseFragment<List<DayModel>>() {

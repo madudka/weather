@@ -3,6 +3,7 @@ package com.madudka.weather
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.graphics.Point
 import android.location.Location
 import android.os.Build
@@ -11,49 +12,52 @@ import android.os.Looper
 import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.common.api.ResolvableApiException
 
 import com.google.android.gms.location.*
-import com.google.android.gms.security.ProviderInstaller
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.madudka.weather.databinding.ActivityMainBinding
-import com.madudka.weather.model.DayListFragment
 import com.madudka.weather.model.DayModel
 import com.madudka.weather.model.HourModel
 import com.madudka.weather.model.WeatherDataModel
 import com.madudka.weather.presenter.MainPresenter
 import com.madudka.weather.view.*
-import com.madudka.weather.view.adapter.MainDayListAdapter
 import com.madudka.weather.view.adapter.MainHourListAdapter
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import kotlin.math.roundToInt
 
 const val COORDINATES = "COORDINATES"
-const val ERROR_DIALOG_REQUEST_CODE = 1
 const val TAG = "GEO"
-//ProviderInstaller.ProviderInstallListener
+
 class MainActivity : MvpAppCompatActivity(), MainView {
 
     private val mainPresenter by moxyPresenter { MainPresenter() }
 
     private lateinit var binding: ActivityMainBinding
 
+    private val tokenSource = CancellationTokenSource()
     private val fusedLocProviderClient by lazy { LocationServices.getFusedLocationProviderClient(this) }
     private val locReq by lazy { createLocReq() }
     private lateinit var loc: Location
+    private val locEmitter : BehaviorSubject<Location> = BehaviorSubject.create()
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        //ProviderInstaller.installIfNeededAsync(this, this)
+        locEmitter
+            .doAfterNext { fusedLocProviderClient.removeLocationUpdates(locCallback) }
+            .subscribe { l ->
+                mainPresenter.refresh(l.latitude.toString(), l.longitude.toString()) }
 
         initBottomSheet()
         init()
@@ -67,6 +71,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             .commit()
 
         if (!intent.hasExtra(COORDINATES)) {
+            checkGeoAvailable()
+            getGeoData()
             fusedLocProviderClient.requestLocationUpdates(locReq, locCallback, Looper.getMainLooper())
         } else {
             val coordinatesExtra = intent.extras!!.getBundle(COORDINATES)!!
@@ -81,6 +87,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             val intent = Intent(this, LocationActivity::class.java)
             startActivity(intent)
             overridePendingTransition(R.anim.slide_left_in, R.anim.fade_out)
+        }
+
+        binding.findLocBtn.setOnClickListener {
+            fusedLocProviderClient.requestLocationUpdates(locReq, locCallback, Looper.getMainLooper())
         }
 
         binding.settingsBtn.setOnClickListener {
@@ -107,6 +117,16 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (this::loc.isInitialized) mainPresenter.refresh(loc.latitude.toString(), loc.longitude.toString())
+    }
+
+    override fun onStop() {
+        super.onStop()
+        fusedLocProviderClient.removeLocationUpdates(locCallback)
+    }
+
     private fun init() {
         binding.locationTv.text = "Mosocow"
         binding.dateTv.text = "29 april"
@@ -125,7 +145,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     private fun createLocReq(): LocationRequest {
         return LocationRequest.create().apply {
-            interval = 10000
+            interval = 600000
             fastestInterval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
@@ -136,37 +156,12 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             Log.d(TAG, "onLocationResult: ${locationResult.locations.size}")
             for (l in locationResult.locations) {
                 loc = l
-                mainPresenter.refresh(l.latitude.toString(), l.longitude.toString())
+                //mainPresenter.refresh(l.latitude.toString(), l.longitude.toString())
+                locEmitter.onNext(loc)
                 Log.d(TAG, "location: lat ${l.latitude}, lon ${l.longitude}")
             }
         }
     }
-
-
-
-//    override fun onProviderInstallFailed(errorCode: Int, recoveryIntent: Intent?) {
-//        GoogleApiAvailability.getInstance().apply {
-//            if (isUserResolvableError(errorCode)) {
-//                // Recoverable error. Show a dialog prompting the user to
-//                // install/update/enable Google Play services.
-//                showErrorDialogFragment(this@MainActivity, errorCode, ERROR_DIALOG_REQUEST_CODE) {
-//                    // The user chose not to take the recovery action
-//                    onProviderInstallerNotAvailable()
-//                }
-//            } else {
-//                onProviderInstallerNotAvailable()
-//            }
-//        }
-//    }
-//
-//    private fun onProviderInstallerNotAvailable() {
-//        // This is reached if the provider cannot be updated for some reason.
-//        // App should consider all HTTP communication to be vulnerable, and take
-//        // appropriate action.
-//    }
-//
-//    override fun onProviderInstalled() {
-//    }
 
     override fun showLocation(data: String) {
         binding.locationTv.text = data
@@ -189,7 +184,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             binding.mainPressureTv.text = getString(pres.unitStringRes, pres.getValue(current.pressure.toDouble()))
 
             binding.mainWeatherIcon.setImageResource(current.weather[0].icon.provideIcon())
-            binding.mainWeatherTv.text = current.weather[0].description
+            binding.mainWeatherTv.text = current.weather[0].description.replaceFirstChar(Char::titlecase)
             binding.mainHumidityTv.text = current.humidity.toExtra("%")
 
             binding.mainSunriseTv.text = current.sunrise.toDateFormat(FORMAT_HOUR_MINUTE)
@@ -206,7 +201,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun showError(error: Throwable) {
-
+        Toast.makeText(this, error.message, Toast.LENGTH_LONG).show()
     }
 
     override fun setLoading(flag: Boolean) {
@@ -248,6 +243,37 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             setProgressViewEndTarget(false, 280)
             setOnRefreshListener {
                 mainPresenter.refresh(loc.latitude.toString(), loc.longitude.toString())
+            }
+        }
+    }
+
+
+    @SuppressLint("MissingPermission")
+    private fun getGeoData(){
+        fusedLocProviderClient
+            .getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, tokenSource.token)
+            .addOnSuccessListener {
+                if (it != null){
+                    loc = it
+                    //mainPresenter.refresh(loc.latitude.toString(), loc.longitude.toString())
+                    locEmitter.onNext(loc)
+                } else{
+                    showError(Exception("Geo data is not available"))
+                }
+            }
+    }
+
+    private fun checkGeoAvailable(){
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locReq)
+        val client = LocationServices.getSettingsClient(this)
+        val task = client.checkLocationSettings(builder.build())
+        task.addOnFailureListener { ex ->
+            if (ex is ResolvableApiException){
+                try {
+                    ex.startResolutionForResult(this, 100)
+                } catch (sendIntentEx : IntentSender.SendIntentException){
+
+                }
             }
         }
     }

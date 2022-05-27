@@ -8,7 +8,6 @@ import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.roundToInt
 
 const val FORMAT_DAY_MONTH_NAME = "dd MMMM"
 const val FORMAT_DAY_WEEK_NAME = "dd EEEE"
@@ -22,18 +21,9 @@ fun Long.toDateFormat(format: String) : String{
     return simpleDateFormat.format(Date(this * 1000))
 }
 
-//fun Double.toCelsius() = (this - 273.15).roundToInt().toString() + "\u00B0"
-
-fun Double.toCelsius() = (if ((this - 273.15).roundToInt() > 0) "+" else "") +
-        (this - 273.15).roundToInt().toString() + "\u00B0"
-
 fun Double.toDegree() = SettingsHolder.temp.getValue(this)
 
-//fun Double.toPercent(extraPart: String = "") = (this * 1000).roundToInt().toString() + extraPart
-
 fun Double.toExtra(extraPart: String = "") = this.toString() + extraPart
-
-//fun Int.toMercuryMM() = String.format("%.2f", this * 0.750063755419211) + " мм"
 
 fun Int.toExtra(extraPart: String = "") = this.toString() + extraPart
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Weather</string>
+    <string name="app_name">Погода</string>
     <string name="min">мин</string>
     <string name="max">макс</string>
     <string name="location">Местоположение</string>
     <string name="search">поиск</string>
     <string name="edit_location">смена местоположения</string>
-    <string name="provided_by">Предоставлено</string>
-    <string name="provider_description">Все данные предоставлены сервисом OpenWeatherMap. Адрес: https://openweathermap.org/</string>
+    <string name="provided_by">Источник данных</string>
+    <string name="provider_description">Данные сервиса OpenWeatherMap. Адрес: https://openweathermap.org/</string>
     <string name="temperature_unit">Ед. изм. температуры</string>
     <string name="wind_speed_unit">Ед. изм. скорости ветра</string>
     <string name="pressure_unit">Ед. изм. давления</string>
@@ -31,4 +31,5 @@
     <string name="sunrise">Восход</string>
     <string name="wind_direction">Напр. ветра</string>
     <string name="sunset">Закат</string>
+    <string name="settings_title">Настройки</string>
 </resources>

@@ -72,4 +72,6 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-rxjava3:$room_version"
 
+    implementation 'com.yandex.android:mobileads:5.1.0'
+
 }

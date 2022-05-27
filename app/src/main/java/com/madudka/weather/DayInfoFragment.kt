@@ -1,17 +1,15 @@
-package com.madudka.weather.model
+package com.madudka.weather
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.transition.TransitionInflater
-import com.madudka.weather.R
 import com.madudka.weather.databinding.FragmentDayInfoBinding
+import com.madudka.weather.model.DayModel
 import com.madudka.weather.view.*
 
 class DayInfoFragment : DayBaseFragment<DayModel>() {
-
-    //private lateinit var viewContext: Context
 
     private lateinit var binding : FragmentDayInfoBinding
 
@@ -38,8 +36,6 @@ class DayInfoFragment : DayBaseFragment<DayModel>() {
         binding.btnBack.setOnClickListener{
             fragManager.popBackStack()
         }
-
-        //viewContext = view.context
 
         updateView()
     }

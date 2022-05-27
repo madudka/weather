@@ -33,7 +33,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/item_day_img"
-            app:layout_constraintHorizontal_bias="0.75"
+            app:layout_constraintHorizontal_bias="0.85"
             style="@style/DayInfoTextViewStyle"
             tools:text="80 %"/>
 
@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.65"
+            app:layout_constraintHorizontal_bias="0.70"
             tools:src="@drawable/ic_sunny"/>
 
         <com.google.android.material.textview.MaterialTextView

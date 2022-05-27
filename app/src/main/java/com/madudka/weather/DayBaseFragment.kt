@@ -1,4 +1,4 @@
-package com.madudka.weather.model
+package com.madudka.weather
 
 import android.content.Context
 import androidx.fragment.app.Fragment

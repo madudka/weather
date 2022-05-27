@@ -12,7 +12,6 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_settings)
 
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         val view = binding.root
@@ -23,14 +22,18 @@ class SettingsActivity : AppCompatActivity() {
         setPrefSettings()
 
         listOf(binding.tempGroup, binding.windSpeedGroup, binding.presGroup).forEach {
-            it.addOnButtonCheckedListener (ToogleButtonClickListener)
+            it.addOnButtonCheckedListener (ToggleButtonClickListener)
         }
+
+        AdYandexBanner().loadBanner(binding)
+        AdYandexInterstitial().loadInterstitial(applicationContext, binding)
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
         SettingsHolder.onDestroy()
+        AdYandexInterstitial.onInterstitialAdDestroy()
     }
 
     override fun onBackPressed() {
@@ -44,7 +47,7 @@ class SettingsActivity : AppCompatActivity() {
         binding.presGroup.check(SettingsHolder.pres.checkedViewId)
     }
 
-    private object ToogleButtonClickListener : MaterialButtonToggleGroup.OnButtonCheckedListener{
+    private object ToggleButtonClickListener : MaterialButtonToggleGroup.OnButtonCheckedListener{
         override fun onButtonChecked(
             group: MaterialButtonToggleGroup?,
             checkedId: Int,

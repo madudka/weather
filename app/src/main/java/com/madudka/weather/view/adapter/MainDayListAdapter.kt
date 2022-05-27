@@ -1,9 +1,10 @@
 package com.madudka.weather.view.adapter
 
-import android.opengl.Visibility
+
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import com.madudka.weather.R
 import com.madudka.weather.databinding.ItemMainDayBinding
 import com.madudka.weather.model.DayModel
 import com.madudka.weather.view.*
@@ -26,6 +27,14 @@ class MainDayListAdapter : BaseAdapter<DayModel>() {
         override fun bindView(position: Int) {
 
             val itemData = listData[position]
+
+            val defTextColor = viewBinding.itemDayDateTv.textColors
+            if (position == 0){
+                viewBinding.itemDayDateTv.setTextColor(
+                    ContextCompat.getColor(viewBinding.itemDayDateTv.context, R.color.sky))
+            } else {
+                viewBinding.itemDayDateTv.setTextColor(defTextColor)
+            }
 
             viewBinding.itemDayContainer.setOnClickListener {
                 clickListener.showDetails(itemData)

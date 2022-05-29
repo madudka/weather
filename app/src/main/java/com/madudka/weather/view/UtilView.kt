@@ -27,6 +27,26 @@ fun Double.toExtra(extraPart: String = "") = this.toString() + extraPart
 
 fun Int.toExtra(extraPart: String = "") = this.toString() + extraPart
 
+fun Int.toDirection() = when (this) {
+    in 349..360, in 0..11 -> "N"
+    in 12..34 -> "NNE"
+    in 35..56 -> "NE"
+    in 57..79 -> "ENE"
+    in 80..101 -> "E"
+    in 102..124 -> "ESE"
+    in 125..146 -> "SE"
+    in 147..169 -> "SSE"
+    in 170..191 -> "S"
+    in 192..214 -> "SSW"
+    in 215..236 -> "SW"
+    in 237..259 -> "WSW"
+    in 260..281 -> "W"
+    in 282..304 -> "WNW"
+    in 305..326 -> "NW"
+    in 327..348 -> "NNW"
+    else -> "N/A"
+}
+
 
 fun String.provideIcon() = when(this) {
     "01n", "01d" -> R.drawable.ic_01d

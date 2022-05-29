@@ -60,7 +60,7 @@ class DayInfoFragment : DayBaseFragment<DayModel>() {
             binding.pressureTv.text = getString(pres.unitStringRes, pres.getValue(pressure.toDouble()))
             val ws = SettingsHolder.ws
             binding.windSpeedTv.text = getString(ws.unitStringRes, ws.getValue(wind_speed))
-            binding.windDirectionTv.text = wind_deg.toString()
+            binding.windDirectionTv.text = wind_deg.toDirection()
             binding.sunriseTv.text = sunrise.toDateFormat(FORMAT_HOUR_MINUTE)
             binding.sunsetTv.text = sunset.toDateFormat(FORMAT_HOUR_MINUTE)
 

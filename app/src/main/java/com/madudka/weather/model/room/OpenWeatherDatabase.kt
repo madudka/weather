@@ -16,7 +16,7 @@ abstract class OpenWeatherDatabase : RoomDatabase() {
     //если не ставить, то при изменении структуры нужно реализовать миграцию
     companion object : SingletonHolder<OpenWeatherDatabase, Context>({
         Room.databaseBuilder(it.applicationContext, OpenWeatherDatabase::class.java, "OpenWeatherDatabase")
-            //.fallbackToDestructiveMigration()
+            .fallbackToDestructiveMigration()
             .build()
     })
 }
